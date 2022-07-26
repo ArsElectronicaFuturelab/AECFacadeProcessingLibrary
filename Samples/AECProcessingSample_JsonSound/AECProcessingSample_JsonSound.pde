@@ -17,10 +17,7 @@ void draw() {
   int x1 = mouseX / aec.getScaleX();
   int x2 = (frameCount / 3) % 55;
   
- background(0, 0,0);
-  
- // println(x1);
-
+  background(0, 0,0);
   noStroke();
 
   int step = 1;

@@ -27,6 +27,7 @@ SinOsc[] sineWaves;
 
 int numSines = 5;
 
+BrownNoise noise;
 
 void jsonSetup() {
   // background(255);
@@ -52,8 +53,13 @@ void jsonSetup() {
      }
      */
 
-    tri = new TriOsc(this);
-    tri.play();
+    //tri = new TriOsc(this);
+    //tri.play();
+    
+      // Create and start the noise generator
+    noise = new BrownNoise(this);
+    noise.play();
+  
   }
   vertX = new float [jsonArr3.size()];
   vertY = new float [jsonArr3.size()];
@@ -94,12 +100,20 @@ void jsonDraw() {
     index++;
     posX = posX + offsetX;
 
-    float frequency = map ( jsonArr3.getFloat(index-1), 15.0, 25.0, 80.0, 1000.0);
-    tri.freq(frequency);
-    //float panning = map(posX, 0, width, -1.0, 1.0);
-    float panning = map(jsonArr3.getFloat(index-1), 15.0, 25.0, -1.0, 1.0);
-    //print(panning);
-    tri.pan(panning);
+    //float frequency = map ( jsonArr3.getFloat(index-1), 15.0, 25.0, 80.0, 1000.0);
+    //tri.freq(frequency);
+ 
+    //float panning = map(jsonArr3.getFloat(index-1), 15.0, 25.0, -1.0, 1.0);
+ 
+    //tri.pan(panning);
+    
+    // Map mouseX from -1.0 to 1.0 for left to right
+  noise.pan(map ( mouseX / aec.getScaleX(), 0.0 , width / aec.getScaleX(), -1.0, 1.0));
+
+  // Map mouseY from 0.0 to 0.3 for amplitude
+  // (the higher the mouse position, the louder the sound)
+  noise.amp(map(jsonArr3.getFloat(index-1), 10.0, 25.0, 0.01, 0.6));
+
 
     /*
       // Map that value to 150 - 1150 Hz
